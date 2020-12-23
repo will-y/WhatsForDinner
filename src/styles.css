@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+.meal {
+    border: 2px solid gray;
+    border-radius: 2px;
+}
+
+.main {
+    background-color: #399eff;
+}
+
+.side {
+    background-color: #5dff59;
+}
+
+.dessert {
+    background-color: #ff9b33;
+}
+
+.container-fluid {
+    width: 90%;
+}

@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <h2 class="text-center">Weekly Plan</h2>
+    <div class="row">
+        <div class="col">
+            <div class="row justify-content-center">
+                <div class="col day" *ngFor="let plan of currentWeek; index as i" [ngClass]="{'day-active': active == i}">
+                    <div class="row justify-content-start">
+                        <div class="col">{{currentWeekDates[i].getDate()}}</div>
+                    </div>
+                    <div class="row meal m-2 p-1 justify-content-between" *ngFor="let meal of plan.meals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}">
+                        <div class="col">
+                            <div class="row">{{meal.name}}</div>
+                            <div class="row">{{meal.link}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-outline-danger mt-1" (click)="onClickRemoveMeal(meal._id, plan.day, plan.month, plan.year)">X</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <button class="btn btn-outline-success mr-2 mb-2" (click)="onAddClicked(i)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-5" *ngIf="showList">
+            <div class="row">
+                <button class="btn btn-outline-success" (click)="onCreateNewClicked()">Create New</button>
+            </div>
+            <div class="row">
+                <app-recipe-search (clickedMeal)="onMealClicked($event)"></app-recipe-search>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <app-add-recipe *ngIf="showCreate"
+                [day] = currentWeekDates[active].getDate()
+                [year] = currentWeekDates[active].getFullYear()
+                [month] = currentWeekDates[active].getMonth()>
+            </app-add-recipe>
+        </div>
+    </div>
+</div>

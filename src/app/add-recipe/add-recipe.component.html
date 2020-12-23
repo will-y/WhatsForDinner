@@ -1,0 +1,23 @@
+<div [hidden]="!alert" class="alert alert-danger" role="alert">
+    Name Field Must Not Be Blank
+</div>
+<h2 class="text-center">Create New Meal</h2>
+<form>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input [(ngModel)]="name" type="text" class="form-control" id="name" placeholder="Recipe Name" required name="name">
+    </div>
+    <div class="form-group">
+        <label for="link">Link/Location:</label>
+        <input [(ngModel)]="link" type="text" class="form-control" id="link" placeholder="Link/Location" name="link">
+    </div>
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <select [(ngModel)]="category" class="form-control" id="category" name="category">
+            <option selected>Main</option>
+            <option>Side</option>
+            <option>Dessert</option>
+        </select>
+    </div>
+</form>
+<button type="submit" class="btn btn-primary" (click)="onFormSubmit()">Create</button>
