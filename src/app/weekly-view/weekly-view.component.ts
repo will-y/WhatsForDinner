@@ -14,11 +14,17 @@ export class WeeklyViewComponent implements OnInit {
   active = -1;
   showList = false;
   showCreate = false;
+  monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  offset = 0;
 
   constructor(private dateService: DateService) { }
 
   ngOnInit(): void {
-    const startDate = this.closestMonday();
+    this.setUp(this.closestMonday());
+  }
+
+  setUp(startDate: Date): void {
     this.currentWeekDates = this.getCurrentWeekDates(startDate);
     this.dateService.getWeeklyMealPlan(startDate.getDate(), startDate.getMonth(), startDate.getFullYear()).subscribe(x => {
       // @ts-ignore
@@ -88,11 +94,6 @@ export class WeeklyViewComponent implements OnInit {
 
   onMealClicked(meal: Meal): void {
     const tempDate = this.currentWeekDates[this.active];
-    if (!this.currentWeek[this.active].meals.find((
-        element => element.name === meal.name && element.link === meal.link && element.category && meal.category))) {
-      this.currentWeek[this.active].meals.push(meal);
-      this.currentWeek[this.active].meals.sort(this.mealCompareFunction);
-    }
     const mealObject = {
       name: meal.name,
       link: meal.link,
@@ -101,6 +102,34 @@ export class WeeklyViewComponent implements OnInit {
       category: meal.category
     };
     this.dateService.addMealToPlan(tempDate.getDate(), tempDate.getMonth(), tempDate.getFullYear(), mealObject);
+    if (this.currentWeek[this.active].meals) {
+      if (!this.currentWeek[this.active].meals.find((
+          element => element.name === meal.name && element.link === meal.link && element.category && meal.category))) {
+        this.currentWeek[this.active].meals.push(meal);
+        this.currentWeek[this.active].meals.sort(this.mealCompareFunction);
+      }
+    } else {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
   }
 
+  onMealDeleted(meal: Meal): void {
+    for (const day of this.currentWeek) {
+      if (day.meals && day.meals.findIndex(element => element._id === meal._id) !== -1) {
+        day.meals.splice(day.meals.findIndex(element => element._id === meal._id), 1);
+      }
+    }
+  }
+
+  onChangeWeek(left: boolean): void {
+    const currentStartDate = this.closestMonday();
+    if (left) {
+      this.offset -= 7;
+    } else {
+      this.offset += 7;
+    }
+    this.setUp(new Date(currentStartDate.getFullYear(), currentStartDate.getMonth(), currentStartDate.getDate() + this.offset));
+  }
 }

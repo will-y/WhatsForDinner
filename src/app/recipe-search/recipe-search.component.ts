@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {MealService} from '../services/meal.service';
 import {Meal} from '../model/meal';
+import {DateService} from '../services/date.service';
 
 @Component({
   selector: 'app-recipe-search',
@@ -9,12 +10,14 @@ import {Meal} from '../model/meal';
 })
 export class RecipeSearchComponent implements OnInit {
   @Output() clickedMeal = new EventEmitter<Meal>();
+  @Output() deleteMeal = new EventEmitter<Meal>();
+
   search: string;
   meals: Meal[];
   showMeals = false;
   sortedMeals: Meal[];
 
-  constructor(private mealService: MealService) { }
+  constructor(private mealService: MealService, private dateService: DateService) { }
 
   ngOnInit(): void {
     this.mealService.getMeals().subscribe(x => {
@@ -26,9 +29,13 @@ export class RecipeSearchComponent implements OnInit {
   }
 
   onSearchChange(): void {
-    this.sortedMeals = this.meals.filter(meal => {
-      return meal.name.toLowerCase().includes(this.search.toLowerCase());
-    });
+    if (this.search) {
+      this.sortedMeals = this.meals.filter(meal => {
+        return meal.name.toLowerCase().includes(this.search.toLowerCase());
+      });
+    } else {
+      this.sortedMeals = this.meals;
+    }
   }
 
   mealCompareFunction(a: Meal, b: Meal): number {
@@ -45,5 +52,12 @@ export class RecipeSearchComponent implements OnInit {
 
   onMealClicked(meal: Meal): void {
     this.clickedMeal.emit(meal);
+  }
+
+  onDeleteMeal(meal: Meal): void {
+    this.dateService.deleteMeal(meal._id);
+    this.meals = this.meals.filter(element => element !== meal);
+    this.onSearchChange();
+    this.deleteMeal.emit(meal);
   }
  }

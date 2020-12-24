@@ -3,9 +3,15 @@
         <input [(ngModel)]="search" class="form-control" type="search" name="search" (ngModelChange)="onSearchChange()">
     </div>
     <div class="recipe-container">
-        <div class="row meal mt-2" *ngFor="let meal of sortedMeals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}" (click)="onMealClicked(meal)">
-            <div class="col-6">{{meal.name}}</div>
-            <div class="col-6">{{meal.link}}</div>
+        <div class="row meal mt-2" *ngFor="let meal of sortedMeals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}">
+            <div class="col-5">{{meal.name}}</div>
+            <div class="col-5">{{meal.link}}</div>
+            <div class="col-1">
+                <button class="btn btn-outline-success" (click)="onMealClicked(meal)">+</button>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-outline-danger" (click)="onDeleteMeal(meal)">X</button>
+            </div>
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {Meal} from '../model/meal';
 import { HttpClient } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,10 @@ export class MealService {
   }
 
   getMeals(): Observable<Meal[]> {
-    return this.http.get<Meal[]>('http://localhost:8080/meals/', {headers: {header: 'Access-Control-Allow-Origin: *'}});
+    return this.http.get<Meal[]>(environment.api_url + '/meals', {headers: {header: 'Access-Control-Allow-Origin: *'}});
   }
 
   addMeal(meal: object): void {
-    this.http.post('http://localhost:8080/meal', meal, {headers: {header: 'Access-Control-Allow-Origin: *'}}).subscribe();
+    this.http.post(environment.api_url + '/meal', meal, {headers: {header: 'Access-Control-Allow-Origin: *'}}).subscribe();
   }
 }
