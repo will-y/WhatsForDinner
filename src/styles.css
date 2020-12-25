@@ -2,6 +2,11 @@
 .meal {
     border: 2px solid gray;
     border-radius: 2px;
+    overflow-wrap: anywhere;
+}
+
+.meal span {
+    overflow-wrap: break-word;
 }
 
 .main {
@@ -18,4 +23,9 @@
 
 .container-fluid {
     width: 90%;
+}
+
+a {
+    color: #0000FF;
+    text-decoration: underline;
 }

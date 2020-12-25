@@ -15,16 +15,16 @@
     <div class="row">
         <div class="col">
             <div class="row justify-content-center">
-                <div class="col day" *ngFor="let plan of currentWeek; index as i" [ngClass]="{'day-active': active == i}">
+                <div class="col-lg day" *ngFor="let plan of currentWeek; index as i" [ngClass]="{'day-active': active == i}">
                     <div class="row justify-content-start">
                         <div class="col">{{currentWeekDates[i].getDate()}}</div>
                     </div>
                     <div class="row meal m-2 p-1 justify-content-between" *ngFor="let meal of plan.meals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}">
                         <div class="col">
-                            <div class="row">{{meal.name}}</div>
+                            <div class="row font-weight-bold"><span>{{meal.name}}</span></div>
                             <div class="row">
                                 <div *ngIf="meal.link.slice(0, 4) === 'http'; else elseBlock">
-                                    <a href="{{meal.link}}" target="_blank">{{meal.link}}</a>
+                                    <a href="{{meal.link}}" target="_blank">Recipe</a>
                                 </div>
                                 <ng-template #elseBlock>{{meal.link}}</ng-template>
                             </div>
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-5" *ngIf="showList">
+        <div class="col-lg-5" *ngIf="showList">
             <div class="row">
                 <button class="btn btn-outline-success mb-1" (click)="onCreateNewClicked()">Create New</button>
             </div>
@@ -49,7 +49,7 @@
                 <app-recipe-search class="recipe-search" (clickedMeal)="onMealClicked($event)" (deleteMeal)="onMealDeleted($event)"></app-recipe-search>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-lg-7">
             <app-add-recipe *ngIf="showCreate"
                 [day] = currentWeekDates[active].getDate()
                 [year] = currentWeekDates[active].getFullYear()

@@ -125,6 +125,9 @@ export class WeeklyViewComponent implements OnInit {
 
   onChangeWeek(left: boolean): void {
     const currentStartDate = this.closestMonday();
+    this.active = -1;
+    this.showCreate = false;
+    this.showList = false;
     if (left) {
       this.offset -= 7;
     } else {

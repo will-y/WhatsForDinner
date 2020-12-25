@@ -2,16 +2,17 @@
     <div class="row">
         <input [(ngModel)]="search" class="form-control" type="search" name="search" (ngModelChange)="onSearchChange()">
     </div>
-    <div class="recipe-container">
-        <div class="row meal mt-2" *ngFor="let meal of sortedMeals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}">
-            <div class="col-5">{{meal.name}}</div>
-            <div class="col-5">{{meal.link}}</div>
-            <div class="col-1">
-                <button class="btn btn-outline-success" (click)="onMealClicked(meal)">+</button>
+    <div class="row meal mt-2 justify-content-around" *ngFor="let meal of sortedMeals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}">
+        <div class="col-4 font-weight-bold">{{meal.name}}</div>
+        <div class="col-4">
+            <div *ngIf="meal.link.slice(0, 4) === 'http'; else elseBlock">
+                <a href="{{meal.link}}" target="_blank">Recipe</a>
             </div>
-            <div class="col-1">
-                <button class="btn btn-outline-danger" (click)="onDeleteMeal(meal)">X</button>
-            </div>
+            <ng-template #elseBlock>{{meal.link}}</ng-template>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-danger" (click)="onDeleteMeal(meal)">X</button>
+            <button class="btn btn-success mr-1" (click)="onMealClicked(meal)">+</button>
         </div>
     </div>
 </div>
