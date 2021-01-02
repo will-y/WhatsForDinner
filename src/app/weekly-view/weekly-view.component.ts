@@ -29,8 +29,6 @@ export class WeeklyViewComponent implements OnInit {
     this.dateService.getWeeklyMealPlan(startDate.getDate(), startDate.getMonth(), startDate.getFullYear()).subscribe(x => {
       // @ts-ignore
       this.currentWeek = x.plan;
-      console.log(this.currentWeek);
-      console.log(this.currentWeekDates);
       this.currentWeek.forEach(element => {
         if (element.meals) {
           element.meals.sort(this.mealCompareFunction);
@@ -103,18 +101,24 @@ export class WeeklyViewComponent implements OnInit {
       lastUsed: new Date(),
       category: meal.category
     };
-    this.dateService.addMealToPlan(tempDate.getDate(), tempDate.getMonth(), tempDate.getFullYear(), mealObject);
-    if (this.currentWeek[this.active].meals) {
-      if (!this.currentWeek[this.active].meals.find((
-          element => element.name === meal.name && element.link === meal.link && element.category && meal.category))) {
-        this.currentWeek[this.active].meals.push(meal);
-        this.currentWeek[this.active].meals.sort(this.mealCompareFunction);
-      }
-    } else {
+    this.dateService.addMealToPlan(tempDate.getDate(), tempDate.getMonth(), tempDate.getFullYear(), mealObject).subscribe(() => {
       setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
+        this.setUp(this.closestMonday());
+      }, 100);
+    });
+
+    // if (this.currentWeek[this.active].meals) {
+    //   if (!this.currentWeek[this.active].meals.find((
+    //       element => element.name === meal.name && element.link === meal.link && element.category && meal.category))) {
+    //     this.currentWeek[this.active].meals.push(meal);
+    //     this.currentWeek[this.active].meals.sort(this.mealCompareFunction);
+    //   }
+    // } else {
+    //
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 1000);
+    // }
   }
 
   onMealDeleted(meal: Meal): void {
@@ -136,5 +140,15 @@ export class WeeklyViewComponent implements OnInit {
       this.offset += 7;
     }
     this.setUp(new Date(currentStartDate.getFullYear(), currentStartDate.getMonth(), currentStartDate.getDate() + this.offset));
+  }
+
+  onMealAdded(temp: any): void {
+    if (temp.day && temp.month && temp.year) {
+      this.dateService.addMealToPlan(temp.day, temp.month, temp.year, temp.meal).subscribe(() => {
+        setTimeout(() => {
+          this.setUp(this.closestMonday());
+        }, 100);
+      });
+    }
   }
 }

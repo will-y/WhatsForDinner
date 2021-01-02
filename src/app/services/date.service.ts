@@ -20,13 +20,13 @@ export class DateService {
     return this.http.get<DayPlan[]>(environment.api_url + '/get-plan', {params});
   }
 
-  addMealToPlan(day: number, month: number, year: number, meal: object): void {
+  addMealToPlan(day: number, month: number, year: number, meal: object): Observable<object> {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
     const params = new HttpParams().append('day', day.toString()).append('month', month.toString()).append('year', year.toString());
 
-    this.http.post(environment.api_url + '/add-plan', meal, {headers, params, responseType: 'json'}).subscribe();
+    return this.http.post(environment.api_url + '/add-plan', meal, {headers, params, responseType: 'json'});
   }
 
   removeMealFromPlan(day: number, month: number, year: number, mealId: string): void {

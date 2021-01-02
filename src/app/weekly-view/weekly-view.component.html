@@ -52,7 +52,8 @@
             <app-add-recipe *ngIf="showCreate"
                 [day] = currentWeekDates[active].getDate()
                 [year] = currentWeekDates[active].getFullYear()
-                [month] = currentWeekDates[active].getMonth()>
+                [month] = currentWeekDates[active].getMonth()
+                (addRecipe)="onMealAdded($event)">
             </app-add-recipe>
         </div>
     </div>

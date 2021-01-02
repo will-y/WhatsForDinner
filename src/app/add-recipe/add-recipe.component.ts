@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {MealService} from '../services/meal.service';
 import {DateService} from '../services/date.service';
+import {Meal} from '../model/meal';
 
 @Component({
   selector: 'app-add-recipe',
@@ -11,6 +12,8 @@ export class AddRecipeComponent implements OnInit {
   @Input() day: number;
   @Input() month: number;
   @Input() year: number;
+
+  @Output() addRecipe = new EventEmitter<object>();
 
   name: string;
   link: string;
@@ -35,13 +38,20 @@ export class AddRecipeComponent implements OnInit {
         lastUsed: new Date(),
         category: this.category
       };
-      if (this.day && this.month && this.year) {
-        this.dateService.addMealToPlan(this.day, this.month, this.year, meal);
-      } else {
-        this.mealService.addMeal(meal);
-      }
+      const temp = {
+        day: this.day,
+        month: this.month,
+        year: this.year,
+        meal
+      };
+      this.addRecipe.emit(temp);
+      // if (this.day && this.month && this.year) {
+      //   this.dateService.addMealToPlan(this.day, this.month, this.year, meal);
+      // } else {
+      //   this.mealService.addMeal(meal);
+      // }
 
-      setTimeout(() => window.location.reload(), 1000);
+      // setTimeout(() => window.location.reload(), 1000);
 
     } else {
       this.alert = true;
