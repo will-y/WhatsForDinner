@@ -2,7 +2,7 @@
     <div class="row">
         <input [(ngModel)]="search" class="form-control" type="search" name="search" (ngModelChange)="onSearchChange()">
     </div>
-    <div class="row meal mt-2 justify-content-around" *ngFor="let meal of sortedMeals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}">
+    <div class="row meal mt-2 justify-content-around p-1" *ngFor="let meal of sortedMeals" [ngClass]="{'main': meal.category === 'Main', 'side': meal.category === 'Side', 'dessert': meal.category === 'Dessert'}">
         <div class="col-4 font-weight-bold">{{meal.name}}</div>
         <div class="col-4">
             <div *ngIf="meal.link.slice(0, 4) === 'http'; else elseBlock">

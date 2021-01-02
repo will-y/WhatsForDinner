@@ -12,7 +12,6 @@ export class DateService {
   constructor(private http: HttpClient) { }
 
   getWeeklyMealPlan(day: number, month: number, year: number): Observable<DayPlan[]> {
-    console.log(environment.api_url);
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 

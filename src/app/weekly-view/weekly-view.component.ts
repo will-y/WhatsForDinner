@@ -29,6 +29,8 @@ export class WeeklyViewComponent implements OnInit {
     this.dateService.getWeeklyMealPlan(startDate.getDate(), startDate.getMonth(), startDate.getFullYear()).subscribe(x => {
       // @ts-ignore
       this.currentWeek = x.plan;
+      console.log(this.currentWeek);
+      console.log(this.currentWeekDates);
       this.currentWeek.forEach(element => {
         if (element.meals) {
           element.meals.sort(this.mealCompareFunction);

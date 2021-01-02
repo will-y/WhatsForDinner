@@ -2,16 +2,15 @@
     <h2 class="text-center">Weekly Plan</h2>
     <div class="row justify-content-center">
         <div class="col">
-            <h3 class="text-right" (click)="onChangeWeek(true)">&#60;</h3>
+            <h3 class="text-right pointer" (click)="onChangeWeek(true)">&#60;</h3>
         </div>
         <div class="col">
             <h3 class="text-center">{{monthNames[currentWeekDates[0].getMonth()] + ' ' + currentWeekDates[0].getDate()}} - {{monthNames[currentWeekDates[6].getMonth()] + ' ' + currentWeekDates[6].getDate()}}</h3>
         </div>
         <div class="col">
-            <h3 class="text-left" (click)="onChangeWeek(false)">&#62;</h3>
+            <h3 class="text-left pointer" (click)="onChangeWeek(false)">&#62;</h3>
         </div>
     </div>
-
     <div class="row">
         <div class="col">
             <div class="row justify-content-center">
@@ -33,8 +32,8 @@
                             <button class="btn btn-outline-danger mt-1" (click)="onClickRemoveMeal(meal._id, plan.day, plan.month, plan.year)">X</button>
                         </div>
                     </div>
-                    <div class="row justify-content-end">
-                        <button class="btn btn-outline-success mr-2 mb-2" (click)="onAddClicked(i)">+</button>
+                    <div class="row justify-content-end m-2 p-1">
+                        <button class="btn btn-outline-success mb-2" (click)="onAddClicked(i)">+</button>
                     </div>
                 </div>
             </div>
