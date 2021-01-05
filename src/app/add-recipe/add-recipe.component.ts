@@ -45,11 +45,6 @@ export class AddRecipeComponent implements OnInit {
         meal
       };
       this.addRecipe.emit(temp);
-      // if (this.day && this.month && this.year) {
-      //   this.dateService.addMealToPlan(this.day, this.month, this.year, meal);
-      // } else {
-      //   this.mealService.addMeal(meal);
-      // }
 
       // setTimeout(() => window.location.reload(), 1000);
 

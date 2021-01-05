@@ -143,12 +143,11 @@ export class WeeklyViewComponent implements OnInit {
   }
 
   onMealAdded(temp: any): void {
-    if (temp.day && temp.month && temp.year) {
-      this.dateService.addMealToPlan(temp.day, temp.month, temp.year, temp.meal).subscribe(() => {
-        setTimeout(() => {
-          this.setUp(this.closestMonday());
-        }, 100);
-      });
-    }
+    console.log(temp);
+    this.dateService.addMealToPlan(temp.day, temp.month, temp.year, temp.meal).subscribe(() => {
+      setTimeout(() => {
+        this.setUp(this.closestMonday());
+      }, 100);
+    });
   }
 }
